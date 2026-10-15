@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Trebuchet MS', Verdana, system-ui, sans-serif;
+  color: #4A2C1A;
+  background-color: #F6EBD6;
+  /* faint sandstone texture made from CSS only */
+  background-image:
+    radial-gradient(ellipse at top, rgba(255,248,225,.7), transparent 60%),
+    radial-gradient(rgba(139,94,52,.14) 1px, transparent 1px);
+  background-size: 100% 100%, 20px 20px;
+}
+section[id] { scroll-margin-top: 5rem; }
+:focus-visible { outline: 3px solid #B8923A; outline-offset: 2px; }
+
+@layer components {
+  .section-title { @apply font-display text-3xl sm:text-4xl font-bold text-bark mb-2; }
+  .section-title::before { content: '\2740\00a0'; color: #B5532F; }
+  .band { height: 14px; border-block: 2px solid #4A2C1A;
+          background: repeating-linear-gradient(90deg,#B5532F 0 18px,#F6EBD6 18px 26px,#2F4A5A 26px 44px,#B8923A 44px 52px); }
+  .rule { height: 6px; width: 96px; border-radius: 3px; margin-bottom: 1.5rem;
+          background: repeating-linear-gradient(90deg,#B5532F 0 16px,#B8923A 16px 24px); }
+  .btn { @apply inline-flex items-center rounded-md bg-terracotta px-4 py-2 text-sm font-semibold text-cream
+         transition duration-200 hover:bg-bark hover:-translate-y-0.5; }
+  .field { @apply w-full rounded-md border-2 border-sandstone bg-cream/70 px-3 py-2 text-bark
+           transition duration-200 focus:border-terracotta focus:bg-white; }
+  .panel { @apply flex flex-col overflow-hidden rounded-sm border-[4px] border-double border-bark bg-cream shadow-[5px_5px_0_#B8923A]
+           transition duration-300 hover:-translate-y-1 hover:shadow-[8px_8px_0_#B5532F]; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+
+/* ---------- Print / Save as PDF ---------- */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  html, body { background: #fff !important; }
+  body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print { display: none !important; }
+  .panel, .print-block { break-inside: avoid; box-shadow: none !important; transform: none !important; }
+  .storyboard-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 8mm !important; }
+  .page-break { break-before: page; }
+  .field { border: none !important; border-bottom: 1px solid #4A2C1A !important; background: transparent !important; border-radius: 0 !important; padding-left: 0 !important; }
+  section { padding-top: 6mm !important; padding-bottom: 6mm !important; }
+}
